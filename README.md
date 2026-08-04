@@ -15,4 +15,4 @@ Open `http://127.0.0.1:8177/`.
 - GitHub Pages: push this folder to a repository, enable Pages from `main` branch root, and point DNS to GitHub Pages.
 - Netlify/Vercel/Cloudflare Pages: upload the folder or connect the repository.
 
-`CNAME` is already set to `deflick.pro`.
+When DNS access is ready, add a `CNAME` file containing `deflick.pro` or set the custom domain in GitHub Pages.
