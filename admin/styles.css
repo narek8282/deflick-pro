@@ -257,6 +257,36 @@ h2 {
   background: transparent;
 }
 
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.check-grid span,
+.check-grid strong {
+  min-height: 3.2rem;
+  display: grid;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.check-grid span {
+  color: var(--muted);
+  font-family: "Roboto Mono", Consolas, monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.check-grid strong {
+  color: var(--acid);
+  font-size: 0.8rem;
+}
+
 .preview {
   min-height: 18rem;
   padding: clamp(1rem, 4vw, 2rem);
