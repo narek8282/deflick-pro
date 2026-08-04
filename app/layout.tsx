@@ -19,9 +19,24 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "DeFlick Production",
+    url: "https://deflick.pro",
+    logo: "https://deflick.pro/assets/deflick-logo.jpg",
+    sameAs: []
+  };
+
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" data-scroll-behavior="smooth">
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

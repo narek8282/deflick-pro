@@ -19,9 +19,14 @@ test("work index filters and project pages are reachable", async ({ page }) => {
 
 test("admin login works with owner credentials", async ({ page }) => {
   await page.goto("/admin");
+  await page.getByLabel("Логин").fill("admin");
+  await page.getByLabel("Пароль").fill("admin");
   await page.getByRole("button", { name: "Войти" }).click();
   await expect(page.getByRole("heading", { name: /Контент, проекты, клиенты/i })).toBeVisible();
   await expect(page.getByText("Сохранить локально")).toBeVisible();
+  await page.getByPlaceholder("Название нового проекта").fill("Morning Test Film");
+  await page.getByRole("button", { name: "Создать draft" }).click();
+  await expect(page.locator('input[value="Morning Test Film"]')).toBeVisible();
 });
 
 test("contact form validates and shows a clear state", async ({ page }) => {

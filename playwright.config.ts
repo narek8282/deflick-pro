@@ -9,6 +9,10 @@ export default defineConfig({
   },
   webServer: {
     command: "npm run dev",
+    env: {
+      ADMIN_USERNAME: "admin",
+      ADMIN_PASSWORD: "admin"
+    },
     url: "http://127.0.0.1:8177",
     reuseExistingServer: true,
     timeout: 120000

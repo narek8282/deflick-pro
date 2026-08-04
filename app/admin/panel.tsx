@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type React from "react";
 import { useMemo, useState } from "react";
 import { capabilities, clients, projects, siteCopy } from "@/lib/content";
 
@@ -10,7 +11,7 @@ type AdminContent = {
   intro: string;
   email: string;
   location: string;
-  projects: { slug: string; title: string; visible: boolean; order: number }[];
+  projects: { slug: string; title: string; visible: boolean; order: number; status: "draft" | "published" }[];
   clients: { name: string; visible: boolean }[];
 };
 
@@ -23,7 +24,8 @@ const defaults: AdminContent = {
     slug: project.slug,
     title: project.title,
     visible: project.visible,
-    order: project.order
+    order: project.order,
+    status: "published"
   })),
   clients
 };
@@ -42,13 +44,51 @@ export function AdminPanel() {
     [content.projects]
   );
 
-  function login(formData: FormData) {
-    if (formData.get("login") === "admin" && formData.get("password") === "admin") {
+  async function login(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch("/api/admin/login", {
+      method: "POST",
+      body: JSON.stringify({
+        login: formData.get("login"),
+        password: formData.get("password")
+      }),
+      headers: { "content-type": "application/json" }
+    });
+
+    if (response.ok) {
       setLoggedIn(true);
       setError("");
       return;
     }
-    setError("Неверный логин или пароль.");
+
+    const data = (await response.json()) as { message?: string };
+    setError(data.message ?? "Неверный логин или пароль.");
+  }
+
+  function createProject(formData: FormData) {
+    const title = String(formData.get("title") ?? "").trim();
+    if (!title) return;
+    const slug = title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+
+    if (content.projects.some((project) => project.slug === slug)) return;
+
+    setContent({
+      ...content,
+      projects: [
+        ...content.projects,
+        {
+          slug,
+          title,
+          visible: false,
+          order: content.projects.length + 1,
+          status: "draft"
+        }
+      ]
+    });
   }
 
   function save() {
@@ -72,14 +112,14 @@ export function AdminPanel() {
           <Image src="/assets/deflick-logo.jpg" alt="DeFlick Production" width={360} height={220} priority />
           <p className="eyebrow">Admin / local preview</p>
           <h1>Вход в панель DeFlick.</h1>
-          <form action={login}>
+          <form onSubmit={login}>
             <label>
               Логин
-              <input name="login" defaultValue="admin" autoComplete="username" />
+              <input name="login" autoComplete="username" />
             </label>
             <label>
               Пароль
-              <input name="password" type="password" defaultValue="admin" autoComplete="current-password" />
+              <input name="password" type="password" autoComplete="current-password" />
             </label>
             <button className="button buttonLight" type="submit">
               Войти
@@ -158,7 +198,11 @@ export function AdminPanel() {
 
         <article className="adminPanel wide">
           <h2>Проекты</h2>
-          <p>Ручной порядок и видимость. Полные поля проекта готовы в схеме данных.</p>
+          <p>Создание, черновик, публикация, ручной порядок и видимость. Полные поля проекта готовы в схеме данных.</p>
+          <form className="inlineForm" action={createProject}>
+            <input name="title" placeholder="Название нового проекта" />
+            <button type="submit">Создать draft</button>
+          </form>
           <div className="adminRows">
             {orderedProjects.map((project) => (
               <div className="adminRow" key={project.slug}>
@@ -189,7 +233,36 @@ export function AdminPanel() {
                   }
                   type="number"
                 />
-                <strong>{project.title}</strong>
+                <input
+                  value={project.title}
+                  onChange={(event) =>
+                    setContent({
+                      ...content,
+                      projects: content.projects.map((item) =>
+                        item.slug === project.slug ? { ...item, title: event.target.value } : item
+                      )
+                    })
+                  }
+                />
+                <select
+                  value={project.status}
+                  onChange={(event) =>
+                    setContent({
+                      ...content,
+                      projects: content.projects.map((item) =>
+                        item.slug === project.slug
+                          ? { ...item, status: event.target.value as "draft" | "published" }
+                          : item
+                      )
+                    })
+                  }
+                >
+                  <option value="draft">Draft</option>
+                  <option value="published">Published</option>
+                </select>
+                <a href={`/work/${project.slug}`} target="_blank">
+                  Preview
+                </a>
               </div>
             ))}
           </div>

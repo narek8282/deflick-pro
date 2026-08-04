@@ -433,7 +433,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   border: 1px solid var(--line);
   background: rgba(0, 0, 0, 0.42);
@@ -719,7 +720,7 @@ dd {
 
 .adminRow {
   display: grid;
-  grid-template-columns: 9rem 5rem 1fr;
+  grid-template-columns: 8rem 5rem minmax(12rem, 1fr) 9rem 5rem;
   align-items: center;
   gap: 0.8rem;
   padding: 0.7rem;
@@ -728,6 +729,23 @@ dd {
 
 .adminRow input[type="checkbox"] {
   width: auto;
+}
+
+.inlineForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.inlineForm button {
+  border: 1px solid var(--line);
+  background: var(--warm);
+  color: var(--black);
+  cursor: pointer;
+  padding: 0.85rem 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 @keyframes loaderIn {
