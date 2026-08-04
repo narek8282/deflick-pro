@@ -15,7 +15,8 @@ http
   .createServer((request, response) => {
     let route = decodeURIComponent(request.url.split("?")[0]);
     if (route === "/" || route === "") route = "/index.html";
-    const file = path.resolve(root, `.${route}`);
+    let file = path.resolve(root, `.${route}`);
+    if (route.endsWith("/")) file = path.resolve(root, `.${route}index.html`);
 
     if (!file.toLowerCase().startsWith(root.toLowerCase())) {
       response.writeHead(403);
