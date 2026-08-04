@@ -1,17 +1,15 @@
-const canvas = document.querySelector("#scene");
+const canvas = document.querySelector("#stage");
 const ctx = canvas.getContext("2d");
-const cursor = document.querySelector("#cursor");
-const clock = document.querySelector("#clock");
-const signalLetters = document.querySelectorAll(".signal-word span");
-const tiltItems = document.querySelectorAll("[data-tilt]");
+const timecode = document.querySelector("#timecode");
 
 let width = 0;
 let height = 0;
+let ratio = 1;
 let particles = [];
-let mouse = { x: 0.5, y: 0.5 };
+let pointer = { x: 0.5, y: 0.45 };
 
 function resize() {
-  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  ratio = Math.min(window.devicePixelRatio || 1, 2);
   width = window.innerWidth;
   height = window.innerHeight;
   canvas.width = Math.floor(width * ratio);
@@ -19,99 +17,89 @@ function resize() {
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  const count = Math.min(120, Math.max(54, Math.floor(width / 14)));
+
+  const count = Math.min(160, Math.max(70, Math.floor(width / 11)));
   particles = Array.from({ length: count }, (_, index) => ({
-    x: (index / count) * width,
+    x: Math.random() * width,
     y: Math.random() * height,
-    speed: 0.25 + Math.random() * 0.55,
-    size: 1 + Math.random() * 2.5,
+    size: 0.8 + Math.random() * 2.8,
+    speed: 0.18 + Math.random() * 0.64,
     phase: Math.random() * Math.PI * 2,
+    color: index % 4,
   }));
+}
+
+function colorFor(index, alpha) {
+  const colors = [
+    `rgba(32, 185, 255, ${alpha})`,
+    `rgba(122, 77, 255, ${alpha})`,
+    `rgba(255, 47, 146, ${alpha})`,
+    `rgba(255, 138, 42, ${alpha})`,
+  ];
+  return colors[index] || colors[0];
 }
 
 function draw(time) {
   ctx.clearRect(0, 0, width, height);
   ctx.globalCompositeOperation = "lighter";
 
-  particles.forEach((particle, index) => {
+  particles.forEach((particle) => {
     particle.y += particle.speed;
-    particle.x += Math.sin(time * 0.0007 + particle.phase) * 0.32;
+    particle.x += Math.sin(time * 0.00045 + particle.phase) * 0.38;
 
-    if (particle.y > height + 30) {
-      particle.y = -30;
+    if (particle.y > height + 40) {
+      particle.y = -40;
       particle.x = Math.random() * width;
     }
 
-    const dx = particle.x - mouse.x * width;
-    const dy = particle.y - mouse.y * height;
+    const dx = particle.x - pointer.x * width;
+    const dy = particle.y - pointer.y * height;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    const pull = Math.max(0, 1 - distance / 260);
-    const size = particle.size + pull * 5;
+    const pull = Math.max(0, 1 - distance / 300);
+    const size = particle.size + pull * 7;
 
     ctx.beginPath();
-    ctx.fillStyle = index % 5 === 0 ? "rgba(255,74,47,0.42)" : "rgba(215,255,63,0.34)";
-    ctx.arc(particle.x + dx * pull * 0.025, particle.y + dy * pull * 0.025, size, 0, Math.PI * 2);
+    ctx.fillStyle = colorFor(particle.color, 0.2 + pull * 0.34);
+    ctx.arc(particle.x + dx * pull * 0.03, particle.y + dy * pull * 0.03, size, 0, Math.PI * 2);
     ctx.fill();
   });
 
   ctx.globalCompositeOperation = "source-over";
-  ctx.strokeStyle = "rgba(244,241,232,0.08)";
+  ctx.strokeStyle = "rgba(247,244,237,0.07)";
   ctx.lineWidth = 1;
-  for (let x = 0; x < width; x += 64) {
+
+  for (let x = -80; x < width + 80; x += 70) {
     ctx.beginPath();
-    ctx.moveTo(x + Math.sin(time * 0.0004 + x) * 12, 0);
-    ctx.lineTo(x, height);
+    ctx.moveTo(x + Math.sin(time * 0.00035 + x) * 18, 0);
+    ctx.lineTo(x - 40, height);
     ctx.stroke();
   }
 
   requestAnimationFrame(draw);
 }
 
-function updateClock() {
+function updateTimecode() {
   const now = new Date();
-  clock.textContent = now.toLocaleTimeString("en-GB", { hour12: false });
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  const frames = String(Math.floor(now.getMilliseconds() / 41.66)).padStart(2, "0");
+  timecode.textContent = `${hours}:${minutes}:${seconds}:${frames}`;
 }
 
 window.addEventListener("resize", resize);
-window.addEventListener("pointermove", (event) => {
-  mouse = {
-    x: event.clientX / Math.max(1, width),
-    y: event.clientY / Math.max(1, height),
-  };
-  cursor.style.left = `${event.clientX}px`;
-  cursor.style.top = `${event.clientY}px`;
-});
-
-document.querySelectorAll("a, button, [data-tilt]").forEach((item) => {
-  item.addEventListener("mouseenter", () => cursor.classList.add("is-hot"));
-  item.addEventListener("mouseleave", () => cursor.classList.remove("is-hot"));
-});
-
-tiltItems.forEach((item) => {
-  item.addEventListener("pointermove", (event) => {
-    const rect = item.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    item.style.transform = `perspective(900px) rotateX(${y * -4}deg) rotateY(${x * 5}deg) translateY(-2px)`;
-  });
-
-  item.addEventListener("pointerleave", () => {
-    item.style.transform = "";
-  });
-});
-
-function animateSignal() {
-  const scroll = window.scrollY * 0.01;
-  signalLetters.forEach((letter, index) => {
-    const lift = Math.sin(scroll + index * 0.9) * 16;
-    letter.style.setProperty("--lift", `${lift}px`);
-  });
-}
-
-window.addEventListener("scroll", animateSignal, { passive: true });
+window.addEventListener(
+  "pointermove",
+  (event) => {
+    pointer = {
+      x: event.clientX / Math.max(1, width),
+      y: event.clientY / Math.max(1, height),
+    };
+  },
+  { passive: true },
+);
 
 resize();
 draw(0);
-updateClock();
-animateSignal();
-setInterval(updateClock, 1000);
+updateTimecode();
+setInterval(updateTimecode, 120);

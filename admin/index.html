@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050505" />
+    <title>Deflick Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;700;800;900&family=Roboto+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="login-panel" id="login-panel">
+        <div class="logo-lockup">
+          <img src="../assets/deflick-logo.jpg" alt="Deflick Production logo" />
+          <div>
+            <span>Admin access</span>
+            <strong>DEFLICK</strong>
+          </div>
+        </div>
+        <form id="login-form">
+          <label>
+            Login
+            <input name="login" autocomplete="username" value="admin" />
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" autocomplete="current-password" value="admin" />
+          </label>
+          <button type="submit">Enter admin</button>
+          <p id="login-error" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="dashboard is-hidden" id="dashboard">
+        <header class="topbar">
+          <a class="brand" href="../">
+            <img src="../assets/deflick-logo.jpg" alt="" />
+            <span>DEFLICK ADMIN</span>
+          </a>
+          <div>
+            <button id="export-json" type="button">Export JSON</button>
+            <button id="reset-data" type="button">Reset</button>
+          </div>
+        </header>
+
+        <section class="hero-board">
+          <div>
+            <p class="mono">Control room</p>
+            <h1>Production board for a cinematic launch.</h1>
+          </div>
+          <div class="stat">
+            <span>Mode</span>
+            <strong id="mode-label">Launch</strong>
+          </div>
+        </section>
+
+        <section class="grid">
+          <article class="panel editor">
+            <h2>Homepage Copy</h2>
+            <label>
+              Hero line
+              <textarea id="hero-input" rows="3"></textarea>
+            </label>
+            <label>
+              Contact text
+              <textarea id="contact-input" rows="4"></textarea>
+            </label>
+            <button id="save-copy" type="button">Save locally</button>
+          </article>
+
+          <article class="panel">
+            <h2>Production Queue</h2>
+            <div class="task-list" id="task-list"></div>
+            <form class="task-form" id="task-form">
+              <input name="task" placeholder="New task" />
+              <button type="submit">Add</button>
+            </form>
+          </article>
+
+          <article class="panel wide">
+            <h2>Preview Notes</h2>
+            <div class="preview">
+              <span>Deflick Production</span>
+              <strong id="preview-hero"></strong>
+              <p id="preview-contact"></p>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
