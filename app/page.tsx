@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
-import { LensScene } from "@/components/LensScene";
+import { HeroLens } from "@/components/HeroLens";
 import { Loader } from "@/components/Loader";
 import { MotionLayer } from "@/components/MotionLayer";
 import { ProjectGrid } from "@/components/ProjectGrid";
@@ -25,7 +25,7 @@ export default function HomePage() {
               height={900}
               priority
             />
-            <LensScene />
+            <HeroLens />
           </div>
           <div className="heroStatement" data-reveal>
             <p className="eyebrow">Production + post / Yerevan and beyond</p>

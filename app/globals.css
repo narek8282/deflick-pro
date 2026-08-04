@@ -142,6 +142,37 @@ img {
   mix-blend-mode: screen;
 }
 
+.lensFallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.fallbackLens {
+  position: absolute;
+  width: min(21rem, 38vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  opacity: 0.76;
+  filter: blur(0.5px);
+}
+
+.fallbackLens.blue {
+  translate: -42% 3%;
+  background: radial-gradient(circle at 42% 36%, rgba(116, 230, 255, 0.86), rgba(25, 185, 255, 0.52) 38%, transparent 68%);
+}
+
+.fallbackLens.pink {
+  background: radial-gradient(circle at 48% 42%, rgba(255, 136, 246, 0.82), rgba(223, 59, 255, 0.5) 40%, transparent 68%);
+}
+
+.fallbackLens.orange {
+  translate: 42% -3%;
+  background: radial-gradient(circle at 48% 40%, rgba(255, 219, 94, 0.86), rgba(255, 138, 37, 0.5) 40%, transparent 68%);
+}
+
 .heroStatement {
   position: relative;
   z-index: 4;
