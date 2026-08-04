@@ -33,6 +33,7 @@ const defaults: AdminContent = {
 export function AdminPanel() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [previewSlug, setPreviewSlug] = useState(defaults.projects[0]?.slug ?? "");
   const [content, setContent] = useState<AdminContent>(() => {
     if (typeof window === "undefined") return defaults;
     const saved = window.localStorage.getItem("deflick-admin-content");
@@ -43,6 +44,7 @@ export function AdminPanel() {
     () => [...content.projects].sort((a, b) => a.order - b.order),
     [content.projects]
   );
+  const previewProject = content.projects.find((project) => project.slug === previewSlug) ?? orderedProjects[0];
 
   async function login(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -260,12 +262,24 @@ export function AdminPanel() {
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
                 </select>
-                <a href={`/work/${project.slug}`} target="_blank">
+                <button onClick={() => setPreviewSlug(project.slug)} type="button">
                   Preview
-                </a>
+                </button>
               </div>
             ))}
           </div>
+        </article>
+
+        <article className="adminPanel wide">
+          <h2>Preview</h2>
+          {previewProject ? (
+            <div className="adminPreview">
+              <span>{previewProject.status}</span>
+              <h3>{previewProject.title}</h3>
+              <p>Slug: /work/{previewProject.slug}</p>
+              <p>Visible: {previewProject.visible ? "yes" : "no"}</p>
+            </div>
+          ) : null}
         </article>
 
         <article className="adminPanel wide">

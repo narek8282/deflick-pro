@@ -732,6 +732,30 @@ dd {
   width: auto;
 }
 
+.adminRow button {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--warm);
+  cursor: pointer;
+  padding: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.adminPreview {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.adminPreview span {
+  color: var(--green);
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .inlineForm {
   display: grid;
   grid-template-columns: 1fr auto;
