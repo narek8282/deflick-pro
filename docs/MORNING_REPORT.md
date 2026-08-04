@@ -44,7 +44,16 @@ Then open `/admin`.
 - ESLint: passed.
 - Production build: passed.
 - Playwright: 8/8 passed on desktop and mobile.
-- Lighthouse: not run yet. It needs a stable deployed URL or a local Chrome Lighthouse pass.
+- Lighthouse local production run:
+  - Performance: 94.
+  - Accessibility: 95.
+  - Best Practices: 96.
+  - SEO: 100.
+  - LCP: 2.9 s.
+  - CLS: 0.
+  - TTI: 3.1 s.
+  - TBT: 70 ms.
+  - Note: Lighthouse produced the JSON report, then Chrome cleanup reported a temporary-directory EPERM warning on Windows.
 
 ## Screenshots
 

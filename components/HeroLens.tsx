@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
 const LensScene = dynamic(() => import("@/components/LensScene").then((mod) => mod.LensScene), {
   ssr: false,
@@ -18,5 +19,17 @@ function LensFallback() {
 }
 
 export function HeroLens() {
-  return <LensScene />;
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    <div
+      className="heroLensLoader"
+      onPointerEnter={() => setEnabled(true)}
+      onPointerMove={() => setEnabled(true)}
+      onTouchStart={() => setEnabled(true)}
+      aria-hidden="true"
+    >
+      {enabled ? <LensScene /> : <LensFallback />}
+    </div>
+  );
 }

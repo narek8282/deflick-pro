@@ -132,6 +132,7 @@ img {
   filter: saturate(0.88) contrast(1.08);
 }
 
+.heroLensLoader,
 .lensScene {
   position: absolute;
   inset: 8% 0 auto auto;
