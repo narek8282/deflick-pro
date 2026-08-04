@@ -4,6 +4,7 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 *.log
+*.err
 .env
 .env.local
 .env.*.local
