@@ -164,7 +164,7 @@ export function AdminPanel() {
     <main className="adminShell">
       <header className="adminTop">
         <Link href="/" className="brandMark">
-          <Image src="/assets/deflick-logo-black.png" alt="" width={160} height={120} />
+          <Image src="/assets/deflick-logo-mark.png" alt="" width={1360} height={759} />
           <span>DEFLICK ADMIN</span>
         </Link>
         <div>

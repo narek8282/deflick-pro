@@ -79,8 +79,8 @@ img {
 }
 
 .brandMark img {
-  width: 4rem;
-  height: 3rem;
+  width: 4.75rem;
+  height: 2.65rem;
   object-fit: contain;
   border: 1px solid var(--line);
   background: #000;
