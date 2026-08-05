@@ -138,7 +138,7 @@ export function AdminPanel() {
     return (
       <main className="adminLogin">
         <section>
-          <Image src="/assets/deflick-logo.jpg" alt="DeFlick Production" width={360} height={220} priority />
+          <Image src="/assets/deflick-logo-black.png" alt="DeFlick Production" width={1600} height={1200} priority />
           <p className="eyebrow">Admin / local preview</p>
           <h1>DeFlick admin sign in.</h1>
           <form onSubmit={login}>
@@ -164,7 +164,7 @@ export function AdminPanel() {
     <main className="adminShell">
       <header className="adminTop">
         <Link href="/" className="brandMark">
-          <Image src="/assets/deflick-logo.jpg" alt="" width={96} height={60} />
+          <Image src="/assets/deflick-logo-black.png" alt="" width={160} height={120} />
           <span>DEFLICK ADMIN</span>
         </Link>
         <div>

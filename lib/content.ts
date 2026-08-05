@@ -92,9 +92,9 @@ const projectRecords: Project[] = [
       "This entry uses the owner-supplied Google Drive showreel link as a temporary playback source. For production-grade adaptive streaming, replace it with Mux, Vimeo or a direct MP4/WebM master after upload.",
     services: ["Production", "Post-production", "Editing", "Color"],
     credits: ["DeFlick Production"],
-    cover: "/assets/deflick-logo.jpg",
-    poster: "/assets/deflick-logo.jpg",
-    teaser: "/assets/deflick-logo.jpg",
+    cover: "/assets/deflick-logo-black.png",
+    poster: "/assets/deflick-logo-black.png",
+    teaser: "/assets/deflick-logo-black.png",
     video: {
       googleDrivePreviewUrl: siteCopy.showreelPreviewUrl,
       externalUrl: siteCopy.showreelUrl

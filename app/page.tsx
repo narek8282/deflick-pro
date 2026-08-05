@@ -19,10 +19,10 @@ export default function HomePage() {
         <section className="hero">
           <div className="heroPoster" data-parallax>
             <Image
-              src="/assets/deflick-logo.jpg"
+              src="/assets/deflick-logo-black.png"
               alt="DeFlick Production logo"
-              width={1440}
-              height={900}
+              width={1600}
+              height={1200}
               priority
             />
             <HeroLens />

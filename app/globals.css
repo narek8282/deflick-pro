@@ -79,10 +79,11 @@ img {
 }
 
 .brandMark img {
-  width: 3.25rem;
-  height: 2rem;
-  object-fit: cover;
+  width: 4rem;
+  height: 3rem;
+  object-fit: contain;
   border: 1px solid var(--line);
+  background: #000;
 }
 
 .siteHeader nav,

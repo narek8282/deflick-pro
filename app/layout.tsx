@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: "DeFlick / Production + Post",
     description:
       "Independent production and post-production studio working across film, commercials, documentaries and cultural projects.",
-    images: ["/assets/deflick-logo.jpg"],
+    images: ["/assets/deflick-logo-black.png"],
     type: "website"
   }
 };
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "Organization",
     name: "DeFlick Production",
     url: "https://deflick.pro",
-    logo: "https://deflick.pro/assets/deflick-logo.jpg",
+    logo: "https://deflick.pro/assets/deflick-logo-black.png",
     sameAs: []
   };
 

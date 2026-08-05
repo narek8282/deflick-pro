@@ -5,7 +5,7 @@ export function SiteHeader() {
   return (
     <header className="siteHeader">
       <Link className="brandMark" href="/" aria-label="DeFlick home">
-        <Image src="/assets/deflick-logo.jpg" alt="" width={96} height={60} priority />
+        <Image src="/assets/deflick-logo-black.png" alt="" width={160} height={120} priority />
         <span>DEFLICK</span>
       </Link>
       <nav aria-label="Primary">

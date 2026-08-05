@@ -4,7 +4,7 @@ The current build avoids fake public claims. The following items are still neede
 
 ## Brand assets
 
-- Original high-resolution DeFlick logo file with transparent or clean export variants.
+- Approved DeFlick logo files are now stored as `public/assets/deflick-logo-black.png` and `public/assets/deflick-logo-light.png`.
 - Favicon and app icon exports derived from the approved logo.
 - Approved wordmark usage rules.
 
