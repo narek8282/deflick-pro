@@ -12,11 +12,11 @@ export default function WorkPage() {
       <SiteHeader />
       <main className="routePage">
         <section className="sectionShell routeHero">
-          <p className="eyebrow">Work index</p>
-          <h1>Selected production, post and cultural project records.</h1>
+          <p className="eyebrow">Portfolio</p>
+          <h1>PROJECTS</h1>
           <p>
-            Project descriptions stay conservative until final materials are verified. Ordering,
-            visibility and fields are prepared for admin control.
+            Film making, trailers, commercials, music videos, animation and documentary records
+            rebuilt from the legacy DeFlick structure. Filters work instantly without reloading.
           </p>
         </section>
         <ProjectGrid />

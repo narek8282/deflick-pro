@@ -5,87 +5,88 @@ import { Footer } from "@/components/Footer";
 import { HeroLens } from "@/components/HeroLens";
 import { Loader } from "@/components/Loader";
 import { MotionLayer } from "@/components/MotionLayer";
-import { ProjectGrid } from "@/components/ProjectGrid";
 import { SiteHeader } from "@/components/SiteHeader";
-import { capabilities, clients, siteCopy } from "@/lib/content";
+import { categoryTiles, clients, siteCopy } from "@/lib/content";
 
 export default function HomePage() {
+  const marquee = [...clients, ...clients];
+
   return (
     <>
       <Loader />
       <SiteHeader />
       <MotionLayer />
       <main>
-        <section className="hero">
-          <div className="heroPoster" data-parallax>
-            <Image
-              src="/assets/deflick-logo-black.png"
-              alt="DeFlick Production logo"
-              width={1600}
-              height={1200}
-              priority
-            />
-            <HeroLens />
-          </div>
+        <section className="hero legacyHero">
           <div className="heroStatement" data-reveal>
-            <p className="eyebrow">Production + post / Yerevan and beyond</p>
+            <p className="eyebrow">Production / Yerevan</p>
             <h1>{siteCopy.headline}</h1>
             <p>{siteCopy.intro}</p>
             <div className="heroActions">
               <Link className="button buttonLight" href="/work">
-                Selected work
-              </Link>
-              <Link className="button" href={siteCopy.showreelUrl} target="_blank" rel="noreferrer">
-                Watch showreel
+                EXPLORE PROJECTS
               </Link>
             </div>
           </div>
-        </section>
-
-        <section className="wordmarkBand" data-reveal>
-          <span>DEFLICK</span>
-          <p>{siteCopy.capability}</p>
-        </section>
-
-        <section className="sectionShell" aria-labelledby="selected-work">
-          <div className="sectionHead" data-reveal>
-            <p className="eyebrow">Selected work</p>
-            <h2 id="selected-work">Large images first. Claims only when verified.</h2>
+          <div className="heroIdentity" aria-label="DeFlick Production">
+            <HeroLens />
+            <strong>DEFLICK</strong>
+            <span>PRODUCTION</span>
           </div>
-          <ProjectGrid />
         </section>
 
-        <section className="capabilityStrip" data-reveal>
-          <h2>{siteCopy.capability}</h2>
+        <section className="mtsFeature" data-reveal>
+          <div className="mtsMap" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <article>
+            <h2>
+              <span />
+              MTS
+            </h2>
+            <p>
+              Leading telecom brand from the legacy DeFlick portfolio. Replace this reversible
+              copy with the approved case text when original MTS files arrive.
+            </p>
+            <Link href="/work/mts">MORE</Link>
+          </article>
+        </section>
+
+        <section className="clientMarquee" aria-label="Clients">
           <div>
-            {capabilities.slice(0, 6).map((capability) => (
-              <span key={capability}>{capability}</span>
+            {marquee.map((client, index) => (
+              <Link href="/work" key={`${client.name}-${index}`}>
+                {client.name}
+              </Link>
             ))}
           </div>
         </section>
 
-        <section className="clientSection sectionShell" data-reveal>
-          <p className="eyebrow">Clients and cultural partners</p>
-          <div className="clientGrid">
-            {clients
-              .filter((client) => client.visible)
-              .map((client) => (
-                <span key={client.name}>{client.name}</span>
-              ))}
-          </div>
+        <section className="categoryMosaic" aria-label="Work categories">
+          {categoryTiles.map((tile) => (
+            <Link className={tile.wide ? "categoryTile wide" : "categoryTile"} href="/work" key={tile.title}>
+              <Image src={tile.image} alt="" fill sizes="(max-width: 900px) 100vw, 50vw" />
+              <span>{tile.number}</span>
+              <h2>{tile.title}</h2>
+              <b aria-hidden="true">-&gt;</b>
+            </Link>
+          ))}
         </section>
 
-        <section className="introBlock sectionShell" data-reveal>
-          <p className="eyebrow">Company</p>
-          <h2>{siteCopy.company}</h2>
+        <section className="helpBand" data-reveal>
+          <p>DON&apos;T YOU KNOW WHAT SUITS YOU?</p>
+          <Link href="/contact">WE CAN HELP YOU</Link>
         </section>
 
         <section className="contactCta sectionShell" data-reveal>
           <div>
-            <p className="eyebrow">Contact</p>
+            <p className="eyebrow">Contact us</p>
             <h2>Bring a film, commercial or cultural project into the room.</h2>
             <p>
-              Business email: <a href={`mailto:${siteCopy.email}`}>{siteCopy.email}</a>
+              E-mail: <a href={`mailto:${siteCopy.email}`}>{siteCopy.email}</a>
             </p>
             <div className="socialLinks">
               <Link href={siteCopy.portfolioUrl} target="_blank" rel="noreferrer">

@@ -4,6 +4,8 @@
 
 A new official DeFlick Production website repository based on Next.js, TypeScript, GSAP and React Three Fiber.
 
+2026-08-05 rebuild pass: homepage, Projects, AU79 project template, How We Work, Pricing and static Admin were reshaped to follow the supplied legacy DeFlick visual reference instead of a generic agency layout.
+
 ## How to launch
 
 ```powershell
@@ -28,6 +30,11 @@ ADMIN_PASSWORD=admin
 
 Then open `/admin`.
 
+Static GitHub Pages fallback:
+
+- Login: `owner`
+- Password: set by owner handoff, not stored as plaintext in source.
+
 ## Editable from admin
 
 - Homepage headline.
@@ -35,6 +42,13 @@ Then open `/admin`.
 - Business email.
 - Location.
 - Project title, order, visibility and status.
+- Draft project creation.
+- Cover image file input.
+- Short preview video file input.
+- Gallery file input.
+- Credits field.
+- Festival selections field.
+- Project description field.
 - Client visibility.
 - JSON export for backup.
 
@@ -44,6 +58,7 @@ Then open `/admin`.
 - ESLint: passed.
 - Production build: passed.
 - Playwright: 8/8 passed on desktop and mobile.
+- Browser screenshot smoke: homepage, Projects, AU79 desktop/mobile passed with no horizontal overflow after fixes.
 - Lighthouse local production run:
   - Performance: 94.
   - Accessibility: 95.
@@ -57,7 +72,27 @@ Then open `/admin`.
 
 ## Screenshots
 
-Screenshots were attempted through Playwright. Functional viewport checks passed. Final screenshot capture should be repeated after the site is deployed to a stable server URL.
+Fresh local screenshots:
+
+- `test-results/manual/home-desktop-rebuild-finalcheck.png`
+- `test-results/manual/projects-desktop-rebuild-finalcheck.png`
+- `test-results/manual/au79-desktop-rebuild-finalcheck.png`
+- `test-results/manual/projects-mobile-rebuild-finalcheck.png`
+- `test-results/manual/home-desktop-rebuild-final.png`
+- `test-results/manual/projects-desktop-rebuild-final.png`
+- `test-results/manual/au79-desktop-rebuild-final.png`
+- `test-results/manual/home-mobile-rebuild-final.png`
+- `test-results/manual/projects-mobile-rebuild-final.png`
+- `test-results/manual/au79-mobile-rebuild-final.png`
+
+Earlier full captures from the same pass:
+
+- `test-results/manual/home-desktop-rebuild.png`
+- `test-results/manual/projects-desktop-rebuild.png`
+- `test-results/manual/au79-desktop-rebuild.png`
+- `test-results/manual/home-mobile-rebuild.png`
+- `test-results/manual/projects-mobile-rebuild.png`
+- `test-results/manual/au79-mobile-rebuild.png`
 
 ## Missing real content or credentials
 
@@ -74,7 +109,7 @@ New owner-provided assets received on 2026-08-05:
 ## Remaining limitations
 
 - Payload CMS is documented but not live without PostgreSQL and a server host.
-- File uploads are not live without media storage.
+- Static admin file inputs are present, but persistent server uploads need Payload CMS plus media storage.
 - GitHub Pages cannot run the new server features.
 - Demo project records must be replaced with verified assets before public portfolio claims are expanded.
 

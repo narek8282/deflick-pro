@@ -7,6 +7,13 @@ The current build avoids fake public claims. The following items are still neede
 - Approved DeFlick logo files are now stored as `public/assets/deflick-logo-black.png` and `public/assets/deflick-logo-light.png`.
 - Favicon and app icon exports derived from the approved logo.
 - Approved wordmark usage rules.
+- Four named old-site reference PNG files from the prompt were not found locally under their original UUID names:
+  - `a4fed29c-dd7e-4907-9e18-0c6c261e5650.png`
+  - `cc1fea04-6457-4de5-9f39-4feb0bdd0477.png`
+  - `ec4c5677-3a3b-485b-b3e0-e847a6620ae4.png`
+  - `71d12944-c629-4ecf-9aaf-19172cfdb754.png`
+- The available old-site visual reference used for this pass is:
+  `media/inbound/openclaw-staged-b4103a9f-ecb0-444b-985e-2cfcc5c8802d/Main---34c9a19e-fe40-4d71-865d-f6927330680f.png`
 
 ## Showreel and video
 
@@ -20,6 +27,9 @@ The current build avoids fake public claims. The following items are still neede
 - Short muted teaser clips for work cards.
 - Captions files for all public films.
 - Mux credentials if adaptive streaming should be used.
+- Original MTS red background line-art asset from the old site.
+- Original category mosaic stills for Music Videos, Film making, Commercial, Animation, Doc. Films and Trailer.
+- Original AU79 main film, poster, VFX before/after stills and color-correction before/after stills.
 
 ## Project verification
 
@@ -44,8 +54,24 @@ For each project:
 
 ## Client candidates needing verification
 
-- Mercedes-Benz Fashion Week Moscow.
-- MTS 4G.
+- MTS.
+- Golden Apricot.
+- 7UP.
+- SAMP.
+- ABSOLUT.
+- Mercedes-Benz.
+- Kochar Museum.
+- GAP.
+- M&S.
+- Lotte.
+- Tamar Kaprelian.
+- Two Unknowns.
+- Armenian Sc(r)atches.
+- Republic Group.
+- Rukolla.
+- G12 Rounds.
+- Yervand Kochar Museum Two Balconies.
+- Anyone There?
 - 7UP.
 - GAP.
 - Golden Apricot International Film Festival.

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getProjectVideo } from "@/lib/video";
@@ -38,26 +39,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <>
       <SiteHeader />
       <main className="projectPage">
-        <section className="projectHero">
-          <Image src={project.poster} alt="" fill priority sizes="100vw" />
-          <div>
-            <p className="eyebrow">
-              {project.category} / {project.year}
-            </p>
-            <h1>{project.title}</h1>
-            <p>{project.summary}</p>
+        <section className="projectIntro sectionShell">
+          <div className="projectServices">
+            <p className="eyebrow">DeFlick services</p>
+            {project.services.map((service) => (
+              <span key={service}>{service}</span>
+            ))}
           </div>
-        </section>
-
-        <section className="projectMeta sectionShell">
-          <dl>
+          <div className="periodicMark">
+            <span>{project.order + 1}</span>
+            <strong>{project.symbol}</strong>
+            <small>{project.title}</small>
+          </div>
+          <dl className="projectFacts">
             <div>
-              <dt>Client</dt>
-              <dd>{project.client}</dd>
+              <dt>Year</dt>
+              <dd>{project.year}</dd>
             </div>
             <div>
-              <dt>DeFlick role</dt>
-              <dd>{project.role}</dd>
+              <dt>Audience</dt>
+              <dd>{project.audience}</dd>
             </div>
             <div>
               <dt>Category</dt>
@@ -78,61 +79,77 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               />
               <div>
                 <span>{video.provider}</span>
-                <strong>Owner-supplied showreel</strong>
-                <p>
-                  This temporary Drive player requires intentional playback. Replace with Mux,
-                  Vimeo or direct MP4/WebM for final adaptive delivery.
-                </p>
+                <strong>{project.title}</strong>
+                <p>00:60 / owner supplied preview source</p>
                 {video.externalUrl ? (
                   <Link className="button" href={video.externalUrl} target="_blank" rel="noreferrer">
-                    Open source file
+                    OPEN SOURCE FILE
                   </Link>
                 ) : null}
               </div>
             </div>
           ) : (
-            <div className="posterFrame">
-              <Image src={video.poster} alt="" fill sizes="100vw" />
+            <div className="posterFrame projectPlayer">
+              <Image src={video.poster} alt="" fill priority sizes="100vw" />
+              <button type="button" aria-label={`Play ${project.title}`}>
+                Play
+              </button>
               <div>
-                <span>{video.provider}</span>
-                <strong>Main film field ready</strong>
-                <p>Audio requires user action. Mux, Vimeo, YouTube and direct MP4/WebM are supported by schema.</p>
+                <span>Main film</span>
+                <strong>{project.title}</strong>
+                <p>00:60 / poster before final video upload</p>
               </div>
             </div>
           )}
         </section>
 
-        <section className="projectBody sectionShell">
+        <section className="projectSections sectionShell">
           <article>
-            <p className="eyebrow">Description</p>
+            <h2>INFORMATION</h2>
             <p>{project.description}</p>
           </article>
           <article>
-            <p className="eyebrow">Services</p>
+            <h2>TECHNICAL SPECIFICATION</h2>
             <ul>
-              {project.services.map((service) => (
-                <li key={service}>{service}</li>
+              {project.technical.map((item) => (
+                <li key={item}>{item}</li>
               ))}
             </ul>
           </article>
           <article>
-            <p className="eyebrow">Credits</p>
+            <h2>BACKSTAGE</h2>
+            <p>{project.backstage}</p>
+          </article>
+          <article className="wide">
+            <h2>VFX</h2>
+            <p>{project.vfx}</p>
+            <BeforeAfterSlider before={project.cover} after={project.teaser} label="VFX" />
+          </article>
+          <article className="wide">
+            <h2>COLOR CORRECTION</h2>
+            <p>{project.color}</p>
+            <BeforeAfterSlider before={project.teaser} after={project.poster} label="COLOR" />
+          </article>
+          <article>
+            <h2>CREW</h2>
             <ul>
               {project.credits.map((credit) => (
                 <li key={credit}>{credit}</li>
               ))}
             </ul>
           </article>
-          {project.awards?.length ? (
-            <article>
-              <p className="eyebrow">Awards</p>
+          <article>
+            <h2>FESTIVAL SELECTIONS</h2>
+            {project.awards?.length ? (
               <ul>
                 {project.awards.map((award) => (
                   <li key={award}>{award}</li>
                 ))}
               </ul>
-            </article>
-          ) : null}
+            ) : (
+              <p>No verified festival selections added yet.</p>
+            )}
+          </article>
         </section>
 
         <section className="gallery sectionShell">
@@ -143,7 +160,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <section className="nextProject sectionShell">
           <Link href={`/work/${nextProject.slug}`}>
-            Next project <strong>{nextProject.title}</strong>
+            NEXT PROJECT <strong>{nextProject.title}</strong>
           </Link>
         </section>
       </main>

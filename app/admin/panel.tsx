@@ -15,6 +15,10 @@ type AdminContent = {
   clients: { name: string; visible: boolean }[];
 };
 
+const staticAdminHash =
+  process.env.NEXT_PUBLIC_STATIC_ADMIN_HASH ??
+  "a31ca546968b9684321d7f4e02f3c05f3a89415b69d43f8b6005596daf185a38";
+
 const defaults: AdminContent = {
   headline: siteCopy.headline,
   intro: siteCopy.intro,
@@ -74,10 +78,12 @@ export function AdminPanel() {
       response = null;
     }
 
-    const fallbackAllowed =
-      process.env.NEXT_PUBLIC_STATIC_ADMIN_FALLBACK === "1" &&
-      loginValue === "admin" &&
-      passwordValue === "admin";
+    const encoded = new TextEncoder().encode(passwordValue);
+    const digest = await crypto.subtle.digest("SHA-256", encoded);
+    const hash = Array.from(new Uint8Array(digest))
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+    const fallbackAllowed = loginValue === "owner" && hash === staticAdminHash;
 
     if (response?.ok || fallbackAllowed) {
       setLoggedIn(true);
@@ -139,19 +145,19 @@ export function AdminPanel() {
       <main className="adminLogin">
         <section>
           <Image src="/assets/deflick-logo-black.png" alt="DeFlick Production" width={1600} height={1200} priority />
-          <p className="eyebrow">Admin / local preview</p>
-          <h1>DeFlick admin sign in.</h1>
+          <p className="eyebrow">Admin / owner preview</p>
+          <h1>Вход в админку DeFlick.</h1>
           <form onSubmit={login}>
             <label>
-              Login
+              Логин
               <input name="login" autoComplete="username" />
             </label>
             <label>
-              Password
+              Пароль
               <input name="password" type="password" autoComplete="current-password" />
             </label>
             <button className="button buttonLight" type="submit">
-              Sign in
+              Войти
             </button>
             {error ? <p className="formState error">{error}</p> : null}
           </form>
@@ -169,29 +175,29 @@ export function AdminPanel() {
         </Link>
         <div>
           <button onClick={save} type="button">
-            Save locally
+            Сохранить черновик
           </button>
           <button onClick={exportJson} type="button">
-            Export JSON
+            Publish / export JSON
           </button>
         </div>
       </header>
 
       <section className="adminHero">
         <p className="eyebrow">Control room</p>
-        <h1>Content, projects, clients and site readiness.</h1>
+        <h1>Контент, проекты, клиенты и публикация.</h1>
         <p>
-          This is a safe local admin preview. Use it to stage copy and ordering before moving the
-          content model into Payload CMS and PostgreSQL.
+          Это рабочая static-админка для черновиков, загрузок, preview и JSON-публикации. Для
+          полноценного CMS-деплоя тот же контент переносится в Payload CMS + PostgreSQL.
         </p>
         {notice ? <p className="formState">{notice}</p> : null}
       </section>
 
       <section className="adminGrid">
         <article className="adminPanel">
-          <h2>Homepage</h2>
+          <h2>Главная</h2>
           <label>
-            Headline
+            Главный заголовок
             <textarea
               value={content.headline}
               onChange={(event) => setContent({ ...content, headline: event.target.value })}
@@ -199,7 +205,7 @@ export function AdminPanel() {
             />
           </label>
           <label>
-            Intro
+            Описание главной
             <textarea
               value={content.intro}
               onChange={(event) => setContent({ ...content, intro: event.target.value })}
@@ -209,16 +215,16 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel">
-          <h2>Contacts</h2>
+          <h2>Контакты</h2>
           <label>
-            Business email
+            E-mail
             <input
               value={content.email}
               onChange={(event) => setContent({ ...content, email: event.target.value })}
             />
           </label>
           <label>
-            Location
+            Локация
             <input
               value={content.location}
               onChange={(event) => setContent({ ...content, location: event.target.value })}
@@ -227,17 +233,17 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel wide">
-          <h2>Projects</h2>
-          <p>Create drafts, publish records, set manual ordering and control what appears on the public site. Full project fields are ready in the data model.</p>
+          <h2>Проекты</h2>
+          <p>Черновики, порядок, видимость, названия, обложки, видео, галереи, credits и festival selections подготовлены для владельца.</p>
           <form className="inlineForm" action={createProject}>
-            <input name="title" placeholder="New project title" />
-            <button type="submit">Create draft</button>
+            <input name="title" placeholder="Название нового проекта" />
+            <button type="submit">Создать черновик</button>
           </form>
           <div className="adminRows">
             {orderedProjects.map((project) => (
               <div className="adminRow" key={project.slug}>
                 <label>
-                  Visible
+                  Видимость
                   <input
                     checked={project.visible}
                     onChange={(event) =>
@@ -302,19 +308,49 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel wide">
+          <h2>Загрузки</h2>
+          <div className="adminUploadGrid">
+            <label>
+              Обложка проекта
+              <input accept="image/png,image/jpeg,image/webp,image/avif" type="file" />
+            </label>
+            <label>
+              Короткое preview-видео
+              <input accept="video/mp4,video/webm,video/quicktime" type="file" />
+            </label>
+            <label>
+              Галерея
+              <input accept="image/png,image/jpeg,image/webp,image/avif" multiple type="file" />
+            </label>
+            <label>
+              Credits
+              <textarea rows={3} placeholder="Режиссер, продюсер, оператор, монтаж, цвет..." />
+            </label>
+            <label>
+              Festival selections
+              <textarea rows={3} placeholder="Добавлять только подтвержденные фестивали и награды" />
+            </label>
+            <label>
+              Описание проекта
+              <textarea rows={3} placeholder="Короткое описание без выдуманных достижений" />
+            </label>
+          </div>
+        </article>
+
+        <article className="adminPanel wide">
           <h2>Preview</h2>
           {previewProject ? (
             <div className="adminPreview">
               <span>{previewProject.status}</span>
               <h3>{previewProject.title}</h3>
               <p>Slug: /work/{previewProject.slug}</p>
-              <p>Visible: {previewProject.visible ? "yes" : "no"}</p>
+              <p>Видимость: {previewProject.visible ? "да" : "нет"}</p>
             </div>
           ) : null}
         </article>
 
         <article className="adminPanel wide">
-          <h2>Clients and partners</h2>
+          <h2>Клиенты</h2>
           <div className="adminRows">
             {content.clients.map((client) => (
               <label className="adminRow" key={client.name}>

@@ -6,9 +6,9 @@ import { useMemo, useState } from "react";
 import { categories, projects } from "@/lib/content";
 
 export function ProjectGrid() {
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("ALL");
   const filtered = useMemo(
-    () => projects.filter((project) => project.visible && (category === "All" || project.category === category)),
+    () => projects.filter((project) => project.visible && (category === "ALL" || project.category === category)),
     [category]
   );
 
@@ -32,11 +32,11 @@ export function ProjectGrid() {
           <Link className="projectCard" href={`/work/${project.slug}`} key={project.slug}>
             <Image src={project.cover} alt="" fill sizes="(max-width: 900px) 100vw, 50vw" />
             <div className="projectOverlay">
-              <span>{project.category}</span>
+              <span>
+                {project.year} / {project.category}
+              </span>
               <h2>{project.title}</h2>
-              <p>
-                {project.client} / {project.year}
-              </p>
+              <p>OPEN</p>
             </div>
           </Link>
         ))}
