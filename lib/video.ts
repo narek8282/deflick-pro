@@ -13,6 +13,14 @@ export function getProjectVideo(project: Project) {
 
   if (video.vimeoUrl) return { provider: "vimeo", src: video.vimeoUrl, poster: project.poster };
   if (video.youtubeUrl) return { provider: "youtube", src: video.youtubeUrl, poster: project.poster };
+  if (video.googleDrivePreviewUrl) {
+    return {
+      provider: "google drive",
+      src: video.googleDrivePreviewUrl,
+      poster: project.poster,
+      externalUrl: video.externalUrl
+    };
+  }
   if (video.directMp4 || video.directWebm) {
     return { provider: "direct", src: video.directMp4 ?? video.directWebm, poster: project.poster };
   }

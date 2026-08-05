@@ -10,7 +10,12 @@ The current build avoids fake public claims. The following items are still neede
 
 ## Showreel and video
 
-- Homepage showreel or approved hero poster.
+- Owner-supplied Google Drive showreel is wired as a temporary source:
+  `https://drive.google.com/file/d/1PgbHhn2IG8BE6hos-hox7ESjkinRtTkD/view?usp=drive_link`
+- Portfolio folder supplied for review:
+  `https://drive.google.com/drive/folders/1MFVtgtpsBuOWQX2C1ZdNML1yzmv3w9QY?usp=sharing`
+- Final production playback still needs Mux, Vimeo or direct MP4/WebM instead of Google Drive.
+- Approved hero poster still needed if the showreel cannot be embedded publicly.
 - Project main films.
 - Short muted teaser clips for work cards.
 - Captions files for all public films.
@@ -49,10 +54,11 @@ For each project:
 
 ## Contact information
 
-- Business email to publish.
+- Business email: `info@deflick.com`.
 - Optional phone, only if explicitly approved.
 - Exact location text.
-- Instagram URL.
+- Instagram URL: `https://www.instagram.com/deflick.production/`.
+- Facebook URL: `https://fb.com/deflick.production`.
 - Vimeo URL.
 - LinkedIn URL.
 

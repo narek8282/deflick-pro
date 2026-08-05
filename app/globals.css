@@ -246,6 +246,35 @@ h2 {
   transform: translateY(-2px);
 }
 
+.heroActions,
+.socialLinks,
+.stackedLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.socialLinks,
+.stackedLinks {
+  margin-top: 1rem;
+}
+
+.socialLinks a,
+.stackedLinks a {
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.socialLinks a:hover,
+.stackedLinks a:hover {
+  color: var(--green);
+}
+
 .wordmarkBand {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -558,6 +587,30 @@ dd {
   border: 1px solid var(--line);
 }
 
+.videoFrame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.videoFrame iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: min(62vw, 42rem);
+  border: 0;
+  background: #000;
+}
+
+.videoFrame > div {
+  display: grid;
+  align-content: end;
+  gap: 0.75rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.035);
+}
+
 .posterFrame > div {
   position: absolute;
   inset: auto 1rem 1rem;
@@ -815,6 +868,7 @@ dd {
   .projectMeta dl,
   .projectBody,
   .aboutGrid,
+  .videoFrame,
   .adminGrid {
     grid-template-columns: 1fr;
   }

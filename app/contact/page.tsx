@@ -29,7 +29,25 @@ export default function ContactPage() {
               </div>
               <div>
                 <dt>Social</dt>
-                <dd>Instagram / Vimeo / LinkedIn fields are ready in admin data.</dd>
+                <dd className="stackedLinks">
+                  <a href={siteCopy.socials.instagram} target="_blank" rel="noreferrer">
+                    Instagram
+                  </a>
+                  <a href={siteCopy.socials.facebook} target="_blank" rel="noreferrer">
+                    Facebook
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt>Portfolio</dt>
+                <dd className="stackedLinks">
+                  <a href={siteCopy.portfolioUrl} target="_blank" rel="noreferrer">
+                    Google Drive
+                  </a>
+                  <a href={siteCopy.showreelUrl} target="_blank" rel="noreferrer">
+                    Showreel
+                  </a>
+                </dd>
               </div>
             </dl>
           </div>

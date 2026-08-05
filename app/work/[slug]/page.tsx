@@ -67,14 +67,39 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </section>
 
         <section className="filmBlock sectionShell">
-          <div className="posterFrame">
-            <Image src={video.poster} alt="" fill sizes="100vw" />
-            <div>
-              <span>{video.provider}</span>
-              <strong>Main film field ready</strong>
-              <p>Audio requires user action. Mux, Vimeo, YouTube and direct MP4/WebM are supported by schema.</p>
+          {video.provider === "google drive" ? (
+            <div className="videoFrame">
+              <iframe
+                src={video.src}
+                title={`${project.title} video`}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+              <div>
+                <span>{video.provider}</span>
+                <strong>Owner-supplied showreel</strong>
+                <p>
+                  This temporary Drive player requires intentional playback. Replace with Mux,
+                  Vimeo or direct MP4/WebM for final adaptive delivery.
+                </p>
+                {video.externalUrl ? (
+                  <Link className="button" href={video.externalUrl} target="_blank" rel="noreferrer">
+                    Open source file
+                  </Link>
+                ) : null}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="posterFrame">
+              <Image src={video.poster} alt="" fill sizes="100vw" />
+              <div>
+                <span>{video.provider}</span>
+                <strong>Main film field ready</strong>
+                <p>Audio requires user action. Mux, Vimeo, YouTube and direct MP4/WebM are supported by schema.</p>
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="projectBody sectionShell">

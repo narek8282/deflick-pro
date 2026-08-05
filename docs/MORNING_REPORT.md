@@ -63,6 +63,14 @@ Screenshots were attempted through Playwright. Functional viewport checks passed
 
 See `docs/CONTENT_GAPS.md`.
 
+New owner-provided assets received on 2026-08-05:
+
+- Business email: `info@deflick.com`.
+- Instagram: `https://www.instagram.com/deflick.production/`.
+- Facebook: `https://fb.com/deflick.production`.
+- Portfolio folder: `https://drive.google.com/drive/folders/1MFVtgtpsBuOWQX2C1ZdNML1yzmv3w9QY?usp=sharing`.
+- Showreel file: `https://drive.google.com/file/d/1PgbHhn2IG8BE6hos-hox7ESjkinRtTkD/view?usp=drive_link`.
+
 ## Remaining limitations
 
 - Payload CMS is documented but not live without PostgreSQL and a server host.
@@ -72,6 +80,6 @@ See `docs/CONTENT_GAPS.md`.
 
 ## Next three owner actions
 
-1. Approve a free Next.js host such as Vercel and a free PostgreSQL provider such as Neon or Supabase.
-2. Provide verified project assets and exact credits.
-3. Provide the final business email, social links and showreel/video links.
+1. Create/import the project on Vercel and attach `deflick.pro`.
+2. Create a free Neon or Supabase PostgreSQL database and set production env vars.
+3. Review the Drive portfolio and turn verified assets into final project records.

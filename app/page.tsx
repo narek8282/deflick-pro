@@ -31,9 +31,14 @@ export default function HomePage() {
             <p className="eyebrow">Production + post / Yerevan and beyond</p>
             <h1>{siteCopy.headline}</h1>
             <p>{siteCopy.intro}</p>
-            <Link className="button buttonLight" href="/work">
-              Selected work
-            </Link>
+            <div className="heroActions">
+              <Link className="button buttonLight" href="/work">
+                Selected work
+              </Link>
+              <Link className="button" href={siteCopy.showreelUrl} target="_blank" rel="noreferrer">
+                Watch showreel
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -82,6 +87,17 @@ export default function HomePage() {
             <p>
               Business email: <a href={`mailto:${siteCopy.email}`}>{siteCopy.email}</a>
             </p>
+            <div className="socialLinks">
+              <Link href={siteCopy.portfolioUrl} target="_blank" rel="noreferrer">
+                Drive portfolio
+              </Link>
+              <Link href={siteCopy.socials.instagram} target="_blank" rel="noreferrer">
+                Instagram
+              </Link>
+              <Link href={siteCopy.socials.facebook} target="_blank" rel="noreferrer">
+                Facebook
+              </Link>
+            </div>
           </div>
           <ContactForm />
         </section>

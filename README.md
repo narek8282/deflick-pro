@@ -43,6 +43,14 @@ Local preview credentials:
 Current admin changes save locally in the browser and can export JSON. For real production
 editing, connect Payload CMS with PostgreSQL as documented in `docs/cms-and-deployment.md`.
 
+## Current public content
+
+- Business email: `info@deflick.com`
+- Instagram: `https://www.instagram.com/deflick.production/`
+- Facebook: `https://fb.com/deflick.production`
+- Portfolio folder: `https://drive.google.com/drive/folders/1MFVtgtpsBuOWQX2C1ZdNML1yzmv3w9QY?usp=sharing`
+- Temporary showreel source: `https://drive.google.com/file/d/1PgbHhn2IG8BE6hos-hox7ESjkinRtTkD/view?usp=drive_link`
+
 ## Deployment
 
 GitHub Pages can serve the old static version, but it cannot run the Next.js contact API,

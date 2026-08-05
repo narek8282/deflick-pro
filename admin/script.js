@@ -16,7 +16,7 @@ const storageKey = "deflick-admin-v1";
 const defaultState = {
   hero: "Films that feel like a signal before they become a release.",
   contact:
-    "Selected production, launch, and sponsor-system work. Built from Armenia for global campaigns, brands, films, and cultural objects.",
+    "Email: info@deflick.com / Instagram: instagram.com/deflick.production / Facebook: fb.com/deflick.production",
   tasks: [
     { title: "Replace www DNS CNAME with narek8282.github.io", done: false },
     { title: "Shoot three hero film frames for Deflick", done: false },

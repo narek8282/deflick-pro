@@ -21,6 +21,8 @@ export type Project = {
     youtubeUrl?: string;
     directMp4?: string;
     directWebm?: string;
+    googleDrivePreviewUrl?: string;
+    externalUrl?: string;
     captions?: string;
   };
   order: number;
@@ -34,10 +36,14 @@ export const siteCopy = {
   capability: "From first treatment to final master.",
   company:
     "DeFlick is a compact production and post house built for directors, brands and cultural institutions that need the work to feel authored from the first treatment to the final master.",
-  email: "hello@deflick.pro",
+  email: "info@deflick.com",
   location: "Yerevan / Dubai / remote",
+  portfolioUrl: "https://drive.google.com/drive/folders/1MFVtgtpsBuOWQX2C1ZdNML1yzmv3w9QY?usp=sharing",
+  showreelUrl: "https://drive.google.com/file/d/1PgbHhn2IG8BE6hos-hox7ESjkinRtTkD/view?usp=drive_link",
+  showreelPreviewUrl: "https://drive.google.com/file/d/1PgbHhn2IG8BE6hos-hox7ESjkinRtTkD/preview",
   socials: {
-    instagram: "",
+    instagram: "https://www.instagram.com/deflick.production/",
+    facebook: "https://fb.com/deflick.production",
     vimeo: "",
     linkedin: ""
   }
@@ -74,6 +80,28 @@ const posterD =
   "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1800&q=80";
 
 const projectRecords: Project[] = [
+  {
+    slug: "deflick-showreel",
+    title: "DeFlick Showreel",
+    client: "DeFlick Production",
+    year: "Portfolio reel",
+    category: "Film",
+    role: "Production + post",
+    summary: "The supplied DeFlick showreel is now wired as the first portfolio entry.",
+    description:
+      "This entry uses the owner-supplied Google Drive showreel link as a temporary playback source. For production-grade adaptive streaming, replace it with Mux, Vimeo or a direct MP4/WebM master after upload.",
+    services: ["Production", "Post-production", "Editing", "Color"],
+    credits: ["DeFlick Production"],
+    cover: "/assets/deflick-logo.jpg",
+    poster: "/assets/deflick-logo.jpg",
+    teaser: "/assets/deflick-logo.jpg",
+    video: {
+      googleDrivePreviewUrl: siteCopy.showreelPreviewUrl,
+      externalUrl: siteCopy.showreelUrl
+    },
+    order: 0,
+    visible: true
+  },
   {
     slug: "fashion-week-motion",
     title: "Fashion Week Motion",
