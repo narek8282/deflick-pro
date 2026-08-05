@@ -1,9 +1,11 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://deflick.pro";
-  const now = new Date();
+  const now = new Date("2026-08-05T00:00:00.000Z");
 
   return [
     {
