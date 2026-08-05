@@ -33,11 +33,18 @@ const defaults: AdminContent = {
 export function AdminPanel() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [previewSlug, setPreviewSlug] = useState(defaults.projects[0]?.slug ?? "");
   const [content, setContent] = useState<AdminContent>(() => {
     if (typeof window === "undefined") return defaults;
     const saved = window.localStorage.getItem("deflick-admin-content");
-    return saved ? ({ ...defaults, ...JSON.parse(saved) } as AdminContent) : defaults;
+    if (!saved) return defaults;
+
+    try {
+      return { ...defaults, ...JSON.parse(saved) } as AdminContent;
+    } catch {
+      return defaults;
+    }
   });
 
   const orderedProjects = useMemo(
@@ -65,7 +72,7 @@ export function AdminPanel() {
     }
 
     const data = (await response.json()) as { message?: string };
-    setError(data.message ?? "Неверный логин или пароль.");
+    setError(data.message ?? "Invalid login or password.");
   }
 
   function createProject(formData: FormData) {
@@ -76,8 +83,12 @@ export function AdminPanel() {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
 
-    if (content.projects.some((project) => project.slug === slug)) return;
+    if (content.projects.some((project) => project.slug === slug)) {
+      setNotice(`Project already exists: ${title}`);
+      return;
+    }
 
+    setNotice(`Draft created: ${title}`);
     setContent({
       ...content,
       projects: [
@@ -95,6 +106,7 @@ export function AdminPanel() {
 
   function save() {
     window.localStorage.setItem("deflick-admin-content", JSON.stringify(content, null, 2));
+    setNotice("Saved locally in this browser.");
   }
 
   function exportJson() {
@@ -105,6 +117,7 @@ export function AdminPanel() {
     link.download = "deflick-content.json";
     link.click();
     URL.revokeObjectURL(url);
+    setNotice("Exported JSON content snapshot.");
   }
 
   if (!loggedIn) {
@@ -113,18 +126,18 @@ export function AdminPanel() {
         <section>
           <Image src="/assets/deflick-logo.jpg" alt="DeFlick Production" width={360} height={220} priority />
           <p className="eyebrow">Admin / local preview</p>
-          <h1>Вход в панель DeFlick.</h1>
+          <h1>DeFlick admin sign in.</h1>
           <form onSubmit={login}>
             <label>
-              Логин
+              Login
               <input name="login" autoComplete="username" />
             </label>
             <label>
-              Пароль
+              Password
               <input name="password" type="password" autoComplete="current-password" />
             </label>
             <button className="button buttonLight" type="submit">
-              Войти
+              Sign in
             </button>
             {error ? <p className="formState error">{error}</p> : null}
           </form>
@@ -142,7 +155,7 @@ export function AdminPanel() {
         </Link>
         <div>
           <button onClick={save} type="button">
-            Сохранить локально
+            Save locally
           </button>
           <button onClick={exportJson} type="button">
             Export JSON
@@ -151,19 +164,20 @@ export function AdminPanel() {
       </header>
 
       <section className="adminHero">
-        <p className="eyebrow">Панель управления</p>
-        <h1>Контент, проекты, клиенты и заявка сайта.</h1>
+        <p className="eyebrow">Control room</p>
+        <h1>Content, projects, clients and site readiness.</h1>
         <p>
-          Сейчас это безопасная локальная админка. Для настоящего серверного сохранения подключается
-          Payload CMS + PostgreSQL на хостинге.
+          This is a safe local admin preview. Use it to stage copy and ordering before moving the
+          content model into Payload CMS and PostgreSQL.
         </p>
+        {notice ? <p className="formState">{notice}</p> : null}
       </section>
 
       <section className="adminGrid">
         <article className="adminPanel">
-          <h2>Главная</h2>
+          <h2>Homepage</h2>
           <label>
-            Заголовок
+            Headline
             <textarea
               value={content.headline}
               onChange={(event) => setContent({ ...content, headline: event.target.value })}
@@ -171,7 +185,7 @@ export function AdminPanel() {
             />
           </label>
           <label>
-            Описание
+            Intro
             <textarea
               value={content.intro}
               onChange={(event) => setContent({ ...content, intro: event.target.value })}
@@ -181,7 +195,7 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel">
-          <h2>Контакты</h2>
+          <h2>Contacts</h2>
           <label>
             Business email
             <input
@@ -190,7 +204,7 @@ export function AdminPanel() {
             />
           </label>
           <label>
-            Локация
+            Location
             <input
               value={content.location}
               onChange={(event) => setContent({ ...content, location: event.target.value })}
@@ -199,17 +213,17 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel wide">
-          <h2>Проекты</h2>
-          <p>Создание, черновик, публикация, ручной порядок и видимость. Полные поля проекта готовы в схеме данных.</p>
+          <h2>Projects</h2>
+          <p>Create drafts, publish records, set manual ordering and control what appears on the public site. Full project fields are ready in the data model.</p>
           <form className="inlineForm" action={createProject}>
-            <input name="title" placeholder="Название нового проекта" />
-            <button type="submit">Создать draft</button>
+            <input name="title" placeholder="New project title" />
+            <button type="submit">Create draft</button>
           </form>
           <div className="adminRows">
             {orderedProjects.map((project) => (
               <div className="adminRow" key={project.slug}>
                 <label>
-                  Показывать
+                  Visible
                   <input
                     checked={project.visible}
                     onChange={(event) =>
@@ -224,6 +238,7 @@ export function AdminPanel() {
                   />
                 </label>
                 <input
+                  aria-label={`${project.title} order`}
                   value={project.order}
                   onChange={(event) =>
                     setContent({
@@ -236,6 +251,7 @@ export function AdminPanel() {
                   type="number"
                 />
                 <input
+                  aria-label={`${project.title} title`}
                   value={project.title}
                   onChange={(event) =>
                     setContent({
@@ -247,6 +263,7 @@ export function AdminPanel() {
                   }
                 />
                 <select
+                  aria-label={`${project.title} status`}
                   value={project.status}
                   onChange={(event) =>
                     setContent({
@@ -283,7 +300,7 @@ export function AdminPanel() {
         </article>
 
         <article className="adminPanel wide">
-          <h2>Клиенты и партнеры</h2>
+          <h2>Clients and partners</h2>
           <div className="adminRows">
             {content.clients.map((client) => (
               <label className="adminRow" key={client.name}>

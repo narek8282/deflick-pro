@@ -19,13 +19,14 @@ test("work index filters and project pages are reachable", async ({ page }) => {
 
 test("admin login works with owner credentials", async ({ page }) => {
   await page.goto("/admin");
-  await page.getByLabel("Логин").fill("admin");
-  await page.getByLabel("Пароль").fill("admin");
-  await page.getByRole("button", { name: "Войти" }).click();
-  await expect(page.getByRole("heading", { name: /Контент, проекты, клиенты/i })).toBeVisible();
-  await expect(page.getByText("Сохранить локально")).toBeVisible();
-  await page.getByPlaceholder("Название нового проекта").fill("Morning Test Film");
-  await page.getByRole("button", { name: "Создать draft" }).click();
+  await page.getByLabel("Login").fill("admin");
+  await page.getByLabel("Password").fill("admin");
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page.getByRole("heading", { name: /Content, projects, clients/i })).toBeVisible();
+  await expect(page.getByText("Save locally")).toBeVisible();
+  await page.getByPlaceholder("New project title").fill("Morning Test Film");
+  await page.getByRole("button", { name: "Create draft" }).click();
+  await expect(page.getByText("Draft created: Morning Test Film")).toBeVisible();
   await expect(page.locator('input[value="Morning Test Film"]')).toBeVisible();
 });
 

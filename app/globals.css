@@ -294,6 +294,8 @@ h2 {
 }
 
 .filters {
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -334,6 +336,7 @@ h2 {
 }
 
 .projectCard img {
+  pointer-events: none;
   object-fit: cover;
   transition: transform 700ms ease, filter 700ms ease;
 }
@@ -681,7 +684,7 @@ dd {
 }
 
 .adminShell {
-  padding: 1rem;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
 }
 
 .adminTop {
@@ -689,6 +692,12 @@ dd {
   justify-content: space-between;
   gap: 1rem;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.65rem 0;
+  background: rgba(5, 5, 5, 0.82);
+  backdrop-filter: blur(16px);
 }
 
 .adminTop div {
@@ -701,12 +710,19 @@ dd {
   padding: clamp(4rem, 8vw, 7rem) 0 2rem;
 }
 
+.adminHero p:not(.eyebrow),
+.adminPanel p {
+  max-width: 56rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .adminGrid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .adminPanel {
-  padding: 1rem;
+  padding: clamp(0.9rem, 2vw, 1.25rem);
   border: 1px solid var(--line);
   background: var(--panel);
 }
@@ -740,6 +756,12 @@ dd {
   padding: 0.7rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.adminRow label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .adminPreview {
@@ -819,6 +841,30 @@ dd {
 
   .adminRow {
     grid-template-columns: 1fr;
+  }
+
+  .adminTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminTop div,
+  .inlineForm {
+    width: 100%;
+  }
+
+  .adminTop button,
+  .inlineForm button {
+    flex: 1;
+  }
+
+  .inlineForm {
+    grid-template-columns: 1fr;
+  }
+
+  .adminRow label {
+    display: grid;
+    grid-template-columns: 1fr auto;
   }
 }
 
